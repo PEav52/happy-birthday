@@ -26,32 +26,59 @@
             margin-bottom: 20px;
         }
 
-        /* Styling for the present boxes */
-        .present-box {
+        /* Container for card flip */
+        .flip-container {
+            perspective: 1000px; /* Perspective for 3D effect */
+            display: inline-block;
+            margin: 20px;
+        }
+
+        /* Card styling */
+        .flip-card {
             width: 150px;
             height: 150px;
-            margin: 20px;
-            display: inline-block;
-            vertical-align: top;
+            position: relative;
+            transform-style: preserve-3d; /* Ensures 3D effect */
+            transition: transform 0.6s; /* Flip effect duration */
+        }
+
+        /* Front side of the card (present box image) */
+        .flip-card .flip-card-front {
+            background-color: #ff66b2;
+            color: white;
+            width: 150px;
+            height: 150px;
             border-radius: 15px;
-            background-color: #ff66b2; /* Pink background color */
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            background-size: cover; /* Ensure the image fits the box */
-            background-position: center; /* Center the image */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
         }
 
-        .present-box:hover {
-            transform: scale(1.1); /* Scale effect on hover */
+        /* Back side of the card (price) */
+        .flip-card .flip-card-back {
+            background-color: #ff66b2;
+            color: white;
+            width: 150px;
+            height: 150px;
+            border-radius: 15px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden; /* Hide the back when flipped */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transform: rotateY(180deg); /* Make back side initially hidden */
         }
 
-        /* Price display */
         .price {
-            font-size: 50px;
+            font-size: 30px;
             font-weight: bold;
-            margin-top: 20px;
         }
-
     </style>
 </head>
 
@@ -60,13 +87,43 @@
         <h1>Birthday Gift</h1>
         <p>Click on a present to reveal your gift price!</p>
 
-        <!-- Display 3 present boxes with images -->
-        <div class="present-box" style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/birthday-cake-L6O5ZmC-600.jpg');" onclick="generatePrice()"></div>
-        <div class="present-box" style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/birthday-cake-4okK8G3-600.jpg');" onclick="generatePrice()"></div>
-        <div class="present-box" style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/vanilla-birthday-cake-vn8JDPD-600.jpg');" onclick="generatePrice()"></div>
+        <!-- Present Boxes with Flip Animation -->
+        <div class="flip-container" onclick="generatePrice(this)">
+            <div class="flip-card">
+                <div class="flip-card-front" style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/birthday-cake-L6O5ZmC-600.jpg');">
+                    <!-- Front Side: Image of the present -->
+                </div>
+                <div class="flip-card-back">
+                    <!-- Back Side: Price displayed here -->
+                    <div class="price" id="priceDisplay1">?</div>
+                </div>
+            </div>
+        </div>
 
-        <!-- Display the price -->
-        <div class="price" id="priceDisplay"></div>
+        <div class="flip-container" onclick="generatePrice(this)">
+            <div class="flip-card">
+                <div class="flip-card-front" style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/birthday-cake-4okK8G3-600.jpg');">
+                    <!-- Front Side: Image of the present -->
+                </div>
+                <div class="flip-card-back">
+                    <!-- Back Side: Price displayed here -->
+                    <div class="price" id="priceDisplay2">?</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-container" onclick="generatePrice(this)">
+            <div class="flip-card">
+                <div class="flip-card-front" style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/vanilla-birthday-cake-vn8JDPD-600.jpg');">
+                    <!-- Front Side: Image of the present -->
+                </div>
+                <div class="flip-card-back">
+                    <!-- Back Side: Price displayed here -->
+                    <div class="price" id="priceDisplay3">?</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Bootstrap JS and dependencies -->
@@ -75,14 +132,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 
     <script>
-        // Function to generate random price
-        function generatePrice() {
+        // Function to generate random price and flip the card
+        function generatePrice(element) {
             // List of prices
             const prices = [2.99, 9.99, 19.99];
             // Get a random price from the list
             const randomPrice = prices[Math.floor(Math.random() * prices.length)];
-            // Display the random price
-            document.getElementById("priceDisplay").innerHTML = `Your Random Birthday Gift Price: $${randomPrice.toFixed(2)}`;
+
+            // Get the corresponding price display element based on which card was clicked
+            const priceId = element.querySelector('.flip-card-back .price').id;
+
+            // Display the random price on the back of the clicked present box
+            document.getElementById(priceId).innerHTML = `$${randomPrice.toFixed(2)}`;
+
+            // Flip the card
+            element.querySelector('.flip-card').style.transform = "rotateY(180deg)";
         }
     </script>
 </body>
