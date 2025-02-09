@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Gift</title>
+    <!-- Bootstrap 4.5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Style -->
+    <style>
+        body {
+            background-color: #f4c2c2; /* Pink background color */
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        /* Styling for the present boxes */
+        .present-box {
+            width: 150px;
+            height: 150px;
+            margin: 20px;
+            display: inline-block;
+            vertical-align: top;
+            border-radius: 15px;
+            background-color: #ff66b2; /* Pink background color */
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            background-size: cover; /* Ensure the image fits the box */
+            background-position: center; /* Center the image */
+        }
+
+        .present-box:hover {
+            transform: scale(1.1); /* Scale effect on hover */
+        }
+
+        /* Price display */
+        .price {
+            font-size: 50px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Birthday Gift</h1>
+        <p>Click on a present to reveal your gift price!</p>
+
+        <!-- Display 3 present boxes with images -->
+        <div class="present-box" style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/birthday-cake-L6O5ZmC-600.jpg');" onclick="generatePrice()"></div>
+        <div class="present-box" style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/birthday-cake-4okK8G3-600.jpg');" onclick="generatePrice()"></div>
+        <div class="present-box" style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/vanilla-birthday-cake-vn8JDPD-600.jpg');" onclick="generatePrice()"></div>
+
+        <!-- Display the price -->
+        <div class="price" id="priceDisplay"></div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to generate random price
+        function generatePrice() {
+            // List of prices
+            const prices = [2.99, 9.99, 19.99];
+            // Get a random price from the list
+            const randomPrice = prices[Math.floor(Math.random() * prices.length)];
+            // Display the random price
+            document.getElementById("priceDisplay").innerHTML = `Your Random Birthday Gift Price: $${randomPrice.toFixed(2)}`;
+        }
+    </script>
+</body>
+
+</html>
